@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 )
 
 // 1. Minimum
@@ -66,44 +67,41 @@ func evenSum(nums []int) int {
 	}
 	return total
 }
-// Return a new slice containing only odd numbers.
-func oddNumbers(nums []int) []int{
-	slice := make([]int, 0, len(nums)/2)
 
-	for num := range nums{
-		if num%2 !=0{
-			slice = append(slice,num)
-			
+// Return a new slice containing only odd numbers.
+func oddNumbers(nums []int) []int {
+	slice := make([]int, 0, len(nums)/2)
+	for num := range nums {
+		if num%2 != 0 {
+			slice = append(slice, num)
 		}
 	}
 	return slice
-	
 }
 
 // Return how many numbers are greater than 100.
 
 func greaterThan100(nums ...int) int {
 	count := 0
-	for _, num := range nums{
-		if num > 100{
+	for _, num := range nums {
+		if num > 100 {
 			count++
 		}
 	}
 	return count
 
 }
+
 // Return the product of only the even numbers.
-func evenProduct(nums ...int)int{
+func evenProduct(nums ...int) int {
 	total := 1
-	for _, num := range nums{
-		if num%2 == 0{
+	for _, num := range nums {
+		if num%2 == 0 {
 			total *= num
 		}
 	}
 	return total
 }
-
-
 
 func main() {
 	fmt.Println(min(3, 4))
@@ -122,34 +120,36 @@ func main() {
 	fmt.Println(evenSum(s))
 	fmt.Println(oddNumbers(s))
 	fmt.Println(small(10, 5, 20))
-	fmt.Println(greaterThan100(101,102,103,100,99))
-	fmt.Println(evenProduct(1,2,3,4,5,6))
+	fmt.Println(greaterThan100(101, 102, 103, 100, 99))
+	fmt.Println(evenProduct(1, 2, 3, 4, 5, 6))
 
-	next := fibonacci()
+	next := counter()
 	fmt.Println(next())
 	fmt.Println(next())
 	fmt.Println(next())
-	
+
+	fmt.Println(largestDigit(1, 2, 3, 4, 5, 2, 9, 2, 1))
+
+	fmt.Println(smallestN(s))
 
 
-
-
+	fmt.Println(countVowels("werecom"))
 }
 
-func small(nums ...int) int{
+func small(nums ...int) int {
 	Minimum := nums[0]
 	for _, num := range nums[1:] {
-		if num < Minimum{
+		if num < Minimum {
 			Minimum = num
 		}
-		
+
 	}
 	return Minimum
 
 }
 
 // Create a closure that starts at 1000 and decreases by 100 every call.
-func decreases() func() int{
+func decreases() func() int {
 	starts := 1000
 	return func() int {
 		starts -= 100
@@ -157,31 +157,119 @@ func decreases() func() int{
 	}
 }
 
-func decreases1() func ()int{
+func decreases1() func() int {
 	start := 10
-	return func() int{
-		if start <= 0{
+	return func() int {
+		if start <= 0 {
 			return 0
 		}
-		start -=10 
+		start -= 10
 		return start
 	}
 }
+
 // Create a closure that doubles every call.
-func doubles() func ()int{
+func doubles() func() int {
 	i := 10
 	return func() int {
-		i*=2
+		i *= 2
 		return i
 	}
 }
-func fibonacci() func() int{
-	a:= 0
-	b:= 1
-	return  func() int {
+func fibonacci() func() int {
+	a := 0
+	b := 1
+	return func() int {
 		current := a
-		a,b = b, a+b
+		a, b = b, a+b
 		return current
 	}
 
+}
+
+func sum(nums ...int) int {
+	total := 0
+	for _, num := range nums {
+		total += num
+	}
+	return total
+}
+
+func smallestN(nums []int) int {
+	min := nums[0]
+	for _,num := range nums {
+		if num < min {
+			min = num
+		}
+	}
+	return min
+}
+
+// Write a closure that starts at 50 and increases by 10 every time it's called.
+func counter() func() int {
+	start := 50
+	return func() int {
+		start += 10
+		return start
+	}
+}
+
+func factorial(n int) int {
+	if n <= 1 {
+		return 1
+	}
+	return n * factorial(n-1)
+}
+
+// Fibonacci closure
+
+func Fibonacciclosure() func() int {
+	a := 0
+	b := 1
+
+	return func() int {
+		current := a
+		a, b = b, a+b
+		return current
+	}
+
+}
+
+func largestDigit(nums ...int)int{
+	max := 0
+
+	for _, num := range nums{
+		if num >max{
+			max = num
+		}
+	}
+	return max
+}
+func recLargest(nums int)int {
+	if nums < 10 {
+		return nums
+	}
+	num := nums%10
+	
+	maxNum := recLargest(nums/10)
+	if num > maxNum{
+		return num
+	}
+	return maxNum
+
+}
+func countVowels(s string) int{
+
+	if len(s) == 0{
+		return 0
+	}
+	first_char := s[0]
+
+	rest_char :=s[1:]
+
+	if first_char == 'a'||first_char == ('e')||first_char == 'i'||first_char == 'o'||first_char == 'u'{
+		return 1 + countVowels(rest_char)
+
+	}
+	return countVowels(rest_char)
 }
